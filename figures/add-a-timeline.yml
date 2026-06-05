@@ -1,0 +1,21 @@
+defaults:
+  frame_height: 1180
+  gap: 150
+
+composites:
+  - out: add-a-timeline/hero.png
+    arrows: true
+    frames:
+      - img: raw/project-actions-uploaded.png
+        caption: "Choose Add timeline"
+        highlights:
+          - {x: 0.05, y: 0.836, w: 0.90, h: 0.072}   # "Add timeline" row
+      - img: raw/create-timeline-empty.png
+        caption: "Name it"
+        highlights:
+          - {x: 0.05, y: 0.39, w: 0.90, h: 0.072}     # Name field
+      - img: raw/timeline-room-list.png
+        crop: 0.58
+        caption: "Capture rooms"
+        highlights:
+          - {x: 0.05, y: 0.36, w: 0.90, h: 0.24}      # the room that still needs a 360°

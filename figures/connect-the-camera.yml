@@ -1,0 +1,16 @@
+defaults:
+  frame_height: 1180
+  gap: 150
+
+composites:
+  - out: connect-the-camera/hero.png
+    arrows: true
+    frames:
+      - img: raw/camera-selection-insta360.png
+        caption: "Choose your camera"
+        highlights:
+          - {x: 0.06, y: 0.155, w: 0.88, h: 0.115}
+      - img: raw/camera-connected-insta360.png
+        caption: "Connected and ready"
+        highlights:
+          - {x: 0.06, y: 0.135, w: 0.88, h: 0.13}

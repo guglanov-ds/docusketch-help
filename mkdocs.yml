@@ -1,0 +1,37 @@
+site_name: DocuSketch Help
+site_url: https://guglanov-ds.github.io/docusketch-help/
+site_description: How-to guides for the DocuSketch mobile app.
+docs_dir: docs
+
+# Stable, title-independent URLs: docs/<slug>.md -> /<slug>/
+use_directory_urls: true
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.top
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+  font:
+    text: Inter
+
+extra_css:
+  - assets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Add a timeline: docs/how-to-add-a-timeline.md
+  - Request a sketch: docs/how-to-request-a-sketch.md
+  - Connect the camera: docs/how-to-connect-the-camera.md

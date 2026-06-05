@@ -1,0 +1,17 @@
+:root {
+  --md-primary-fg-color: #6F6D41;       /* Eucalyptus.dark */
+  --md-primary-fg-color--light: #8b8857;
+  --md-primary-fg-color--dark: #55532D;
+  --md-accent-fg-color: #6F6D41;
+  --md-typeset-a-color: #6F6D41;
+}
+
+/* Article figures: full-width, gentle rounding. */
+.md-typeset img {
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+.md-typeset h1 {
+  font-weight: 700;
+}
