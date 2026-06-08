@@ -48,6 +48,10 @@ copy "presentation-features-camera/CameraScreenshotTests - Camera connected Rico
 copy "presentation-features-camera/CameraScreenshotTests - Camera connected Mi storage low.png"         "camera-mi-storage-low.png"
 copy "presentation-features-camera/CameraStorageFullAlertScreenshotTests - Camera storage full alert.png" "camera-storage-full-alert.png"
 
+# --- how-to-reshoot-360-images-in-a-project (tut4) --- (project-list/room-list already pulled)
+copy "presentation-features-project/ProjectOverviewScreenshotTests - Project overview populated.png" "project-overview.png"
+copy "presentation-features-room/RoomDetailScreenshotTests - Room detail with panorama.png"          "room-detail-reshoot.png"
+
 if [[ $missing -ne 0 ]]; then
   echo "Some baselines are missing — regenerate them in the mobile worktree, then rerun." >&2
   exit 1

@@ -1,0 +1,26 @@
+# Reproduction of help.docusketch.com/docs/how-to-reshoot-360-images-in-a-project (tut4).
+# Two clean mobile composites from current-app screenshot-test baselines — all four screens
+# live in the Projects tab. Same house style as the other articles: real native iOS 26 chrome
+# (status bar + nav bar + Projects tab bar), uniform iPhone 17 aspect, #F9F9F5
+# (--bg-neutral-light) backdrop, no arrows / badges / captions.
+defaults:
+  frame_height: 1180
+  gap: 110
+  bg: "#F9F9F5"
+  status_bar: true
+
+composites:
+  - out: how-to-reshoot-360-images-in-a-project/01-open-rooms.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/project-list.png, tabbar: projects}
+      - {img: raw/project-overview.png, tabbar: projects}
+      - {img: raw/room-list.png, tabbar: projects}
+
+  - out: how-to-reshoot-360-images-in-a-project/02-reshoot.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/room-list.png, tabbar: projects}
+      - {img: raw/room-detail-reshoot.png, tabbar: projects}
