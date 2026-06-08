@@ -7,7 +7,7 @@
 defaults:
   frame_height: 1180
   gap: 110
-  bg: "#DBECF2"
+  bg: "#F9F9F5"  # --bg-neutral-light (design system)
   status_bar: true
 
 composites:

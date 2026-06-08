@@ -2,7 +2,7 @@
 # replacing the reused Document360 originals. Three two-frame composites, one per camera
 # family, mirroring the original: frame 1 = connected camera with the "storage almost full"
 # banner, frame 2 = the "Camera storage is full" alert. Same clean house style as the other
-# articles (#DBECF2, real native iOS 26 status bar + Camera-selected tab bar captured from
+# articles (#F9F9F5, real native iOS 26 status bar + Camera-selected tab bar captured from
 # the running app, no arrows/badges). The native nav bar is already in each baseline.
 #
 # DS1 = INSTA360 family (the app renders it "DocuSketch° DS1"); Mi = MadVenture/Mi Sphere.
@@ -11,7 +11,7 @@
 defaults:
   frame_height: 1180
   gap: 110
-  bg: "#DBECF2"
+  bg: "#F9F9F5"  # --bg-neutral-light (design system)
   status_bar: true
 
 composites:

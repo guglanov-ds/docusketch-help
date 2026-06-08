@@ -1,6 +1,6 @@
 # Faithful reproduction of help.docusketch.com/docs/how-to-request-a-sketch
 # (the "On Mobile App" section). Two clean composites built from current-app
-# baselines, same house style as how-to-add-a-timeline: #DBECF2 backdrop, real
+# baselines, same house style as how-to-add-a-timeline: #F9F9F5 backdrop, real
 # native iOS 26 status bar + tab bar, no arrows / badges / captions.
 #
 # The two "On Web Portal" images are NOT composed here — they are reused as-is
@@ -16,7 +16,7 @@
 defaults:
   frame_height: 1180
   gap: 110
-  bg: "#DBECF2"
+  bg: "#F9F9F5"  # --bg-neutral-light (design system)
   status_bar: true
 
 composites:
