@@ -103,30 +103,38 @@ def trim_trailing(img: Image.Image, tol: int = 12) -> Image.Image:
     return img.crop((0, 0, w, min(h, y + 14)))
 
 
-def add_chrome(src: Image.Image, status=None, tabbar=None) -> Image.Image:
-    """Splice real native iOS chrome onto a screenshot-test baseline: a status bar on top
-    and/or the app tab bar at the bottom. The nav bar is already real UIKit inside the
-    baseline, so it is never added here. `status` is light|dark|True(=light)|None;
-    `tabbar` is projects|camera|True(=projects)|None. Strips are width-matched to `src`."""
+# iPhone 17 screen reference (the captured device, 1206x2622 @3x). Every mobile frame is
+# composed to this aspect ratio so all the phones across the articles are the same shape.
+_DEV_W, _DEV_H = 1206, 2622
+_STATUS_PX, _TABBAR_PX = 177, 240   # captured chrome-strip heights at _DEV_W width
+
+
+def _chrome_img(v, default_key, table):
+    """Resolve a chrome variant: light|dark / projects|camera; True picks the default."""
+    if not v:
+        return None
+    return table.get(default_key if v is True else str(v))
+
+
+def build_device_frame(src: Image.Image, status=None, tabbar=None) -> Image.Image:
+    """Compose one frame as a full iPhone 17 screen at a fixed aspect ratio (_DEV_W:_DEV_H),
+    so every frame is the same shape regardless of body content or which chrome it carries.
+    The real native status bar goes on top, the app body fills the rest, and the floating
+    tab bar is overlaid at the bottom (main screens). The native nav bar is already in `src`.
+    The body is height-fit into the area below the status bar (a small uniform scale), which
+    keeps all content visible — no cropping of bottom buttons."""
     w = src.width
-
-    def _pick(v, default_key, table):
-        if not v:
-            return None
-        img = table.get(default_key if v is True else str(v))
-        return (img.resize((w, round(img.height * w / img.width)), Image.LANCZOS)
-                if img is not None else None)
-
-    sb = _pick(status, "light", _STATUS_BARS)
-    tb = _pick(tabbar, "projects", _TAB_BARS)
-    total = (sb.height if sb else 0) + src.height + (tb.height if tb else 0)
-    canvas = Image.new("RGB", (w, total), "white")
-    y = 0
+    fh = round(w * _DEV_H / _DEV_W)
+    sb = _chrome_img(status, "light", _STATUS_BARS)
+    tb = _chrome_img(tabbar, "projects", _TAB_BARS)
+    status_h = round(w * _STATUS_PX / _DEV_W) if sb is not None else 0
+    canvas = Image.new("RGB", (w, fh), "#F4F3EA")
+    canvas.paste(src.resize((w, fh - status_h), Image.LANCZOS), (0, status_h))
     if sb is not None:
-        canvas.paste(sb, (0, y)); y += sb.height
-    canvas.paste(src, (0, y)); y += src.height
+        canvas.paste(sb.resize((w, status_h), Image.LANCZOS), (0, 0))
     if tb is not None:
-        canvas.paste(tb, (0, y))
+        tab_h = round(w * _TABBAR_PX / _DEV_W)
+        canvas.paste(tb.resize((w, tab_h), Image.LANCZOS), (0, fh - tab_h))
     return canvas
 
 
@@ -192,15 +200,9 @@ def compose_one(spec: dict, defaults: dict, out_root: Path) -> Path:
     cards, pads, scaled_sizes = [], [], []
     for f in frames:
         src = Image.open(ASSETS / f["img"]).convert("RGB")
-        if f.get("trim"):
-            src = trim_trailing(src)
-        crop = f.get("crop")  # keep top fraction of a tall screen (0..1)
-        if crop:
-            src = src.crop((0, 0, src.width, int(src.height * crop)))
+        # Every frame is composed to a fixed iPhone 17 screen aspect (uniform shape).
         status_v = f.get("status_bar", d.get("status_bar"))  # frame overrides spec/defaults
-        tabbar_v = f.get("tabbar")
-        if status_v or tabbar_v:
-            src = add_chrome(src, status=status_v, tabbar=tabbar_v)
+        src = build_device_frame(src, status=status_v, tabbar=f.get("tabbar"))
         scale = fh / src.height
         sw = round(src.width * scale)
         scaled = src.resize((sw, fh), Image.LANCZOS)
