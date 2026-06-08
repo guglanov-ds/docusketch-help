@@ -1,9 +1,9 @@
 # Faithful reproduction of help.docusketch.com/docs/how-to-add-a-timeline:
 # same 7 images, same frame grouping (3-3-3-2-3-3-1), fresh screenshots, CLEAN
 # (no highlight boxes / arrows / captions / badges).
-# Chrome: faux iOS status bar on every frame; tab bar on app-screen frames.
-# NOTE: tab-bar-src.png is a PLACEHOLDER (Compose TabBar component) — replace with the
-# real native iOS UITabBar capture later; status bar is the real iOS system bar.
+# Chrome: real native iOS 26 status bar on every frame + the real Projects-tab tab bar on
+# app-screen frames, both captured from the running app (tools/crop-chrome.py). The native
+# nav bar is already part of each screenshot-test baseline.
 defaults:
   frame_height: 1180
   gap: 110

@@ -70,10 +70,23 @@ def load_font(size: int) -> ImageFont.FreeTypeFont:
 
 
 CHROME_DIR = ASSETS / "chrome"
-_STATUS_BAR = (Image.open(CHROME_DIR / "status-bar-src.png").convert("RGB")
-               if (CHROME_DIR / "status-bar-src.png").exists() else None)
-_TAB_BAR = (Image.open(CHROME_DIR / "tab-bar-src.png").convert("RGB")
-            if (CHROME_DIR / "tab-bar-src.png").exists() else None)
+
+
+def _load_chrome(name: str) -> Image.Image | None:
+    p = CHROME_DIR / name
+    return Image.open(p).convert("RGB") if p.exists() else None
+
+
+# Real native iOS 26 chrome captured from the running app (see tools/crop-chrome.py),
+# keyed by variant. Old single-file names kept as fallbacks for back-compat.
+_STATUS_BARS = {
+    "light": _load_chrome("status-bar-light-src.png") or _load_chrome("status-bar-src.png"),
+    "dark": _load_chrome("status-bar-dark-src.png"),
+}
+_TAB_BARS = {
+    "projects": _load_chrome("tab-bar-projects-src.png") or _load_chrome("tab-bar-src.png"),
+    "camera": _load_chrome("tab-bar-camera-src.png"),
+}
 
 
 def trim_trailing(img: Image.Image, tol: int = 12) -> Image.Image:
@@ -90,13 +103,22 @@ def trim_trailing(img: Image.Image, tol: int = 12) -> Image.Image:
     return img.crop((0, 0, w, min(h, y + 14)))
 
 
-def add_chrome(src: Image.Image, status: bool, tabbar: bool) -> Image.Image:
-    """Stack a faux iOS status bar on top and/or the current app tab bar at the bottom."""
+def add_chrome(src: Image.Image, status=None, tabbar=None) -> Image.Image:
+    """Splice real native iOS chrome onto a screenshot-test baseline: a status bar on top
+    and/or the app tab bar at the bottom. The nav bar is already real UIKit inside the
+    baseline, so it is never added here. `status` is light|dark|True(=light)|None;
+    `tabbar` is projects|camera|True(=projects)|None. Strips are width-matched to `src`."""
     w = src.width
-    sb = (_STATUS_BAR.resize((w, round(_STATUS_BAR.height * w / _STATUS_BAR.width)), Image.LANCZOS)
-          if (status and _STATUS_BAR is not None) else None)
-    tb = (_TAB_BAR.resize((w, round(_TAB_BAR.height * w / _TAB_BAR.width)), Image.LANCZOS)
-          if (tabbar and _TAB_BAR is not None) else None)
+
+    def _pick(v, default_key, table):
+        if not v:
+            return None
+        img = table.get(default_key if v is True else str(v))
+        return (img.resize((w, round(img.height * w / img.width)), Image.LANCZOS)
+                if img is not None else None)
+
+    sb = _pick(status, "light", _STATUS_BARS)
+    tb = _pick(tabbar, "projects", _TAB_BARS)
     total = (sb.height if sb else 0) + src.height + (tb.height if tb else 0)
     canvas = Image.new("RGB", (w, total), "white")
     y = 0
@@ -175,8 +197,10 @@ def compose_one(spec: dict, defaults: dict, out_root: Path) -> Path:
         crop = f.get("crop")  # keep top fraction of a tall screen (0..1)
         if crop:
             src = src.crop((0, 0, src.width, int(src.height * crop)))
-        if spec.get("status_bar") or f.get("tabbar"):
-            src = add_chrome(src, status=bool(spec.get("status_bar")), tabbar=bool(f.get("tabbar")))
+        status_v = f.get("status_bar", d.get("status_bar"))  # frame overrides spec/defaults
+        tabbar_v = f.get("tabbar")
+        if status_v or tabbar_v:
+            src = add_chrome(src, status=status_v, tabbar=tabbar_v)
         scale = fh / src.height
         sw = round(src.width * scale)
         scaled = src.resize((sw, fh), Image.LANCZOS)

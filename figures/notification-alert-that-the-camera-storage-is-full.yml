@@ -2,7 +2,8 @@
 # replacing the reused Document360 originals. Three two-frame composites, one per camera
 # family, mirroring the original: frame 1 = connected camera with the "storage almost full"
 # banner, frame 2 = the "Camera storage is full" alert. Same clean house style as the other
-# articles (#DBECF2, faux iOS status bar, tab bar on the camera screen, no arrows/badges).
+# articles (#DBECF2, real native iOS 26 status bar + Camera-selected tab bar captured from
+# the running app, no arrows/badges). The native nav bar is already in each baseline.
 #
 # DS1 = INSTA360 family (the app renders it "DocuSketch° DS1"); Mi = MadVenture/Mi Sphere.
 # The storage-full alert is a Compose approximation (the real popup isn't capturable by the
@@ -18,19 +19,19 @@ composites:
     arrows: false
     badges: false
     frames:
-      - {img: raw/camera-ds1-storage-low.png, trim: true, tabbar: true}
+      - {img: raw/camera-ds1-storage-low.png, trim: true, tabbar: camera}
       - {img: raw/camera-storage-full-alert.png}
 
   - out: notification-alert-that-the-camera-storage-is-full/02-ricoh-theta.png
     arrows: false
     badges: false
     frames:
-      - {img: raw/camera-ricoh-storage-low.png, trim: true, tabbar: true}
+      - {img: raw/camera-ricoh-storage-low.png, trim: true, tabbar: camera}
       - {img: raw/camera-storage-full-alert.png}
 
   - out: notification-alert-that-the-camera-storage-is-full/03-madventure-misphere.png
     arrows: false
     badges: false
     frames:
-      - {img: raw/camera-mi-storage-low.png, trim: true, tabbar: true}
+      - {img: raw/camera-mi-storage-low.png, trim: true, tabbar: camera}
       - {img: raw/camera-storage-full-alert.png}
