@@ -119,17 +119,22 @@ def _chrome_img(v, default_key, table):
 def build_device_frame(src: Image.Image, status=None, tabbar=None) -> Image.Image:
     """Compose one frame as a full iPhone 17 screen at a fixed aspect ratio (_DEV_W:_DEV_H),
     so every frame is the same shape regardless of body content or which chrome it carries.
-    The real native status bar goes on top, the app body fills the rest, and the floating
-    tab bar is overlaid at the bottom (main screens). The native nav bar is already in `src`.
-    The body is height-fit into the area below the status bar (a small uniform scale), which
-    keeps all content visible — no cropping of bottom buttons."""
+    The real native status bar goes on top, the app body sits below it at NATURAL scale
+    (no vertical squish), and whatever runs past the screen bottom is cropped — exactly like
+    a real phone showing the top of a scrollable screen. The floating tab bar is overlaid at
+    the bottom (main screens). The native nav bar is already inside `src`."""
     w = src.width
     fh = round(w * _DEV_H / _DEV_W)
     sb = _chrome_img(status, "light", _STATUS_BARS)
     tb = _chrome_img(tabbar, "projects", _TAB_BARS)
     status_h = round(w * _STATUS_PX / _DEV_W) if sb is not None else 0
     canvas = Image.new("RGB", (w, fh), "#F4F3EA")
-    canvas.paste(src.resize((w, fh - status_h), Image.LANCZOS), (0, status_h))
+    content_h = fh - status_h
+    # Tall scrollable screens keep natural scale and crop what runs past the bottom (shows the
+    # top, like a real phone). Screen-height bodies are fit to the content area instead (a
+    # sub-5% adjustment) so bottom-pinned buttons (Request / Next) aren't cropped off.
+    body = src if src.height > content_h * 1.15 else src.resize((w, content_h), Image.LANCZOS)
+    canvas.paste(body, (0, status_h))
     if sb is not None:
         canvas.paste(sb.resize((w, status_h), Image.LANCZOS), (0, 0))
     if tb is not None:
