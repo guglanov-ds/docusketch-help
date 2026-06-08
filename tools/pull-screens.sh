@@ -28,6 +28,26 @@ copy "presentation-features-project/CreateOrEditProjectScreenshotTests - Create 
 copy "presentation-features-timeline/TimelineRoomListScreenshotTests - Timeline room list populated.png" "timeline-room-list.png"
 copy "presentation-features-sketch/InteriorSketchRequestScreenshotTests - InteriorSketchRequest form.png" "sketch-request-form.png"
 
+# --- how-to-add-a-timeline (full 7-step reproduction) ---
+copy "presentation-features-project/ProjectListScreenshotTests - Project list populated.png"        "project-list.png"
+copy "presentation-features-project/ProjectListScreenshotTests - Project list with timelines.png"   "project-list-timelines.png"
+copy "presentation-features-project/ProjectActionsScreenshotTests - Project actions local only.png" "project-actions-local.png"
+copy "presentation-features-camera/Camera360ShotsScreenshotTests - Camera 360 shots connected time shift.png" "shoot-360.png"
+copy "presentation-features-viewer360/Viewer360ScreenshotTests - Viewer360 bottom content collapsed.png" "viewer-360.png"
+copy "presentation-features-room/RoomListScreenshotTests - Room list populated.png"                 "room-list.png"
+copy "presentation-features-project/UploadProjectScreenshotTests - Upload project not started.png"  "upload-progress.png"
+copy "presentation-features-timeline/TimelineRoomActionsScreenshotTests - Timeline room actions default.png" "timeline-room-actions.png"
+copy "presentation-features-project/UploadAlertScreenshotTests - Upload timeline parent required alert.png" "upload-alert.png"
+copy "presentation-features-viewer360/Viewer360ScreenshotTests - Viewer360 image.png"                "viewer-360-close.png"
+copy "presentation-features-timeline/TimelineRoomListScreenshotTests - Timeline room list all captured.png" "timeline-room-all-captured.png"
+
+# --- notification-alert-that-the-camera-storage-is-full (tut3) ---
+# INSTA360 renders as "DocuSketch° DS1", so the generic storage-low shot is the DS1 frame.
+copy "presentation-features-camera/CameraScreenshotTests - Camera connected storage low.png"            "camera-ds1-storage-low.png"
+copy "presentation-features-camera/CameraScreenshotTests - Camera connected Ricoh storage low.png"      "camera-ricoh-storage-low.png"
+copy "presentation-features-camera/CameraScreenshotTests - Camera connected Mi storage low.png"         "camera-mi-storage-low.png"
+copy "presentation-features-camera/CameraStorageFullAlertScreenshotTests - Camera storage full alert.png" "camera-storage-full-alert.png"
+
 if [[ $missing -ne 0 ]]; then
   echo "Some baselines are missing — regenerate them in the mobile worktree, then rerun." >&2
   exit 1

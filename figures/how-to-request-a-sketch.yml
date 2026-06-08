@@ -1,0 +1,34 @@
+# Faithful reproduction of help.docusketch.com/docs/how-to-request-a-sketch
+# (the "On Mobile App" section). Two clean composites built from current-app
+# baselines, same house style as how-to-add-a-timeline: #DBECF2 backdrop, faux
+# iOS status bar, no arrows / badges / captions.
+#
+# The two "On Web Portal" images are NOT composed here — they are reused as-is
+# (2430x1488 desktop captures that already carry the original article's own red
+# callouts) and copied straight into docs/assets/how-to-request-a-sketch/ as
+# 03-web-request-sketch.png and 04-web-sketch-type.png.
+#
+# COMPROMISE: the original 12(15) showed the request form twice (empty -> type
+# selected + Overnight delivery on). We show one current-app state (Verisk
+# preselected, request summary visible); rendering the toggled-on variant would
+# need a new iOS screenshot-test build. Note the current app reads
+# "Cotality (Symbility)" where the reused web shots still read "CoreLogic".
+defaults:
+  frame_height: 1180
+  gap: 110
+  bg: "#DBECF2"
+  status_bar: true
+
+composites:
+  - out: how-to-request-a-sketch/01-request-sketch.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/project-list.png, tabbar: true}
+      - {img: raw/project-actions-uploaded.png}
+
+  - out: how-to-request-a-sketch/02-sketch-type.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/sketch-request-form.png}

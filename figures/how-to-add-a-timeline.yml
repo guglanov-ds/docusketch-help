@@ -1,0 +1,65 @@
+# Faithful reproduction of help.docusketch.com/docs/how-to-add-a-timeline:
+# same 7 images, same frame grouping (3-3-3-2-3-3-1), fresh screenshots, CLEAN
+# (no highlight boxes / arrows / captions / badges).
+# Chrome: faux iOS status bar on every frame; tab bar on app-screen frames.
+# NOTE: tab-bar-src.png is a PLACEHOLDER (Compose TabBar component) — replace with the
+# real native iOS UITabBar capture later; status bar is the real iOS system bar.
+defaults:
+  frame_height: 1180
+  gap: 110
+  bg: "#DBECF2"
+  status_bar: true
+
+composites:
+  - out: how-to-add-a-timeline/01-add-timeline.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/project-list.png, tabbar: true}
+      - {img: raw/project-actions-uploaded.png}
+      - {img: raw/create-timeline-empty.png, tabbar: true}
+
+  - out: how-to-add-a-timeline/02-view-360.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/viewer-360-close.png}
+      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+
+  - out: how-to-add-a-timeline/03-take-360.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/shoot-360.png}
+      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+
+  - out: how-to-add-a-timeline/04-room-menu.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/timeline-room-actions.png}
+
+  - out: how-to-add-a-timeline/05-done.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/timeline-room-all-captured.png, trim: true, tabbar: true}
+      - {img: raw/room-list.png, trim: true, tabbar: true}
+      - {img: raw/project-list-timelines.png, tabbar: true}
+
+  - out: how-to-add-a-timeline/06-upload.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/project-list.png, tabbar: true}
+      - {img: raw/project-actions-local.png}
+      - {img: raw/upload-progress.png}
+
+  - out: how-to-add-a-timeline/07-parent-warning.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/upload-alert.png}

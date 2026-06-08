@@ -32,7 +32,7 @@ BG = "#F9F9F5"          # --bg-neutral-light
 ACCENT = "#E92F2F"      # --bg-error / --text-error (callouts, arrows)
 INK = "#1A1905"         # --text-black (captions)
 FRAME_BORDER = "#E2E0D3"  # --stroke-neutral-default (hairline around frame)
-SHADOW = (26, 25, 5, 70)  # ash, soft
+SHADOW = (26, 25, 5, 35)  # ash, soft (half-opacity)
 
 DEFAULTS = {
     "frame_height": 1180,   # px each frame is scaled to
@@ -69,6 +69,45 @@ def load_font(size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.load_default()
 
 
+CHROME_DIR = ASSETS / "chrome"
+_STATUS_BAR = (Image.open(CHROME_DIR / "status-bar-src.png").convert("RGB")
+               if (CHROME_DIR / "status-bar-src.png").exists() else None)
+_TAB_BAR = (Image.open(CHROME_DIR / "tab-bar-src.png").convert("RGB")
+            if (CHROME_DIR / "tab-bar-src.png").exists() else None)
+
+
+def trim_trailing(img: Image.Image, tol: int = 12) -> Image.Image:
+    """Drop uniform-colour trailing rows (blank space below content) — never chrome."""
+    img = img.convert("RGB")
+    w, h = img.size
+    px = img.load()
+    base = px[w // 2, h - 1]
+    def uniform(y):
+        return all(abs(px[x, y][i] - base[i]) <= tol for x in range(0, w, 8) for i in range(3))
+    y = h - 1
+    while y > h * 0.4 and uniform(y):
+        y -= 1
+    return img.crop((0, 0, w, min(h, y + 14)))
+
+
+def add_chrome(src: Image.Image, status: bool, tabbar: bool) -> Image.Image:
+    """Stack a faux iOS status bar on top and/or the current app tab bar at the bottom."""
+    w = src.width
+    sb = (_STATUS_BAR.resize((w, round(_STATUS_BAR.height * w / _STATUS_BAR.width)), Image.LANCZOS)
+          if (status and _STATUS_BAR is not None) else None)
+    tb = (_TAB_BAR.resize((w, round(_TAB_BAR.height * w / _TAB_BAR.width)), Image.LANCZOS)
+          if (tabbar and _TAB_BAR is not None) else None)
+    total = (sb.height if sb else 0) + src.height + (tb.height if tb else 0)
+    canvas = Image.new("RGB", (w, total), "white")
+    y = 0
+    if sb is not None:
+        canvas.paste(sb, (0, y)); y += sb.height
+    canvas.paste(src, (0, y)); y += src.height
+    if tb is not None:
+        canvas.paste(tb, (0, y))
+    return canvas
+
+
 def rounded(img: Image.Image, radius: int) -> Image.Image:
     """Return img (RGBA) with rounded corners and a hairline border."""
     img = img.convert("RGBA")
@@ -82,8 +121,8 @@ def rounded(img: Image.Image, radius: int) -> Image.Image:
     return img
 
 
-def with_shadow(card: Image.Image, radius: int, blur: int = 34,
-                offset: tuple[int, int] = (0, 16)) -> tuple[Image.Image, int]:
+def with_shadow(card: Image.Image, radius: int, blur: int = 17,
+                offset: tuple[int, int] = (0, 8)) -> tuple[Image.Image, int]:
     """Wrap a rounded RGBA card in a soft drop shadow. Returns (image, pad)."""
     pad = blur * 2 + max(abs(offset[0]), abs(offset[1]))
     w, h = card.size
@@ -122,6 +161,7 @@ def compose_one(spec: dict, defaults: dict, out_root: Path) -> Path:
     accent = d["accent"]
 
     frames = spec["frames"]
+    show_badges = spec.get("badges", True)   # set false for clean, annotation-free strips
     has_caption = any(f.get("caption") for f in frames)
     cap_font = load_font(d["caption_size"])
     badge_font = load_font(int(d["badge_size"] * 0.46))
@@ -130,9 +170,13 @@ def compose_one(spec: dict, defaults: dict, out_root: Path) -> Path:
     cards, pads, scaled_sizes = [], [], []
     for f in frames:
         src = Image.open(ASSETS / f["img"]).convert("RGB")
+        if f.get("trim"):
+            src = trim_trailing(src)
         crop = f.get("crop")  # keep top fraction of a tall screen (0..1)
         if crop:
             src = src.crop((0, 0, src.width, int(src.height * crop)))
+        if spec.get("status_bar") or f.get("tabbar"):
+            src = add_chrome(src, status=bool(spec.get("status_bar")), tabbar=bool(f.get("tabbar")))
         scale = fh / src.height
         sw = round(src.width * scale)
         scaled = src.resize((sw, fh), Image.LANCZOS)
@@ -180,7 +224,7 @@ def compose_one(spec: dict, defaults: dict, out_root: Path) -> Path:
     # Step badges (top-left of each frame) + captions (below).
     for idx, ((fx, fy, fw, fh_), f) in enumerate(zip(inner_boxes, frames), start=1):
         step = f.get("step", idx)
-        if step:
+        if step and show_badges:
             bs = d["badge_size"] // 2
             draw_badge(draw, fx + bs, fy + bs, step, accent, d["badge_size"], badge_font)
         cap = f.get("caption")
@@ -204,7 +248,11 @@ def main(argv: list[str]) -> int:
         doc = yaml.safe_load(Path(spec_file).read_text())
         defaults = doc.get("defaults", {})
         for spec in doc.get("composites", []):
-            out = compose_one(spec, defaults, ASSETS)
+            try:
+                out = compose_one(spec, defaults, ASSETS)
+            except FileNotFoundError as e:
+                print(f"skipped {spec.get('out')} (missing input: {getattr(e, 'filename', e)})")
+                continue
             print(f"wrote {out.relative_to(ASSETS.parent.parent)}  ({Image.open(out).size[0]}x{Image.open(out).size[1]})")
     return 0
 

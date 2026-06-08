@@ -3,3 +3,9 @@ site/
 __pycache__/
 *.pyc
 .DS_Store
+
+# Document360 source exports (third-party HTML/CSS/JS + original copyrighted help
+# content) — kept locally as reference only, never published.
+tut1/
+tut2/
+tut3/
