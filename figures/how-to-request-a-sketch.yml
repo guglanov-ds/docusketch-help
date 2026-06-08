@@ -24,7 +24,7 @@ composites:
     arrows: false
     badges: false
     frames:
-      - {img: raw/project-list.png, tabbar: true}
+      - {img: raw/project-list.png, tabbar: projects}
       - {img: raw/project-actions-uploaded.png}
 
   - out: how-to-request-a-sketch/02-sketch-type.png

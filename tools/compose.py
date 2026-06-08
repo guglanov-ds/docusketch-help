@@ -89,20 +89,6 @@ _TAB_BARS = {
 }
 
 
-def trim_trailing(img: Image.Image, tol: int = 12) -> Image.Image:
-    """Drop uniform-colour trailing rows (blank space below content) — never chrome."""
-    img = img.convert("RGB")
-    w, h = img.size
-    px = img.load()
-    base = px[w // 2, h - 1]
-    def uniform(y):
-        return all(abs(px[x, y][i] - base[i]) <= tol for x in range(0, w, 8) for i in range(3))
-    y = h - 1
-    while y > h * 0.4 and uniform(y):
-        y -= 1
-    return img.crop((0, 0, w, min(h, y + 14)))
-
-
 # iPhone 17 screen reference (the captured device, 1206x2622 @3x). Every mobile frame is
 # composed to this aspect ratio so all the phones across the articles are the same shape.
 _DEV_W, _DEV_H = 1206, 2622

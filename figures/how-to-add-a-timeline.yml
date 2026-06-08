@@ -15,46 +15,46 @@ composites:
     arrows: false
     badges: false
     frames:
-      - {img: raw/project-list.png, tabbar: true}
+      - {img: raw/project-list.png, tabbar: projects}
       - {img: raw/project-actions-uploaded.png}
-      - {img: raw/create-timeline-empty.png, tabbar: true}
+      - {img: raw/create-timeline-empty.png, tabbar: projects}
 
   - out: how-to-add-a-timeline/02-view-360.png
     arrows: false
     badges: false
     frames:
-      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/timeline-room-list.png, tabbar: projects}
       - {img: raw/viewer-360-close.png}
-      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/timeline-room-list.png, tabbar: projects}
 
   - out: how-to-add-a-timeline/03-take-360.png
     arrows: false
     badges: false
     frames:
-      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/timeline-room-list.png, tabbar: projects}
       - {img: raw/shoot-360.png}
-      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/timeline-room-list.png, tabbar: projects}
 
   - out: how-to-add-a-timeline/04-room-menu.png
     arrows: false
     badges: false
     frames:
-      - {img: raw/timeline-room-list.png, trim: true, tabbar: true}
+      - {img: raw/timeline-room-list.png, tabbar: projects}
       - {img: raw/timeline-room-actions.png}
 
   - out: how-to-add-a-timeline/05-done.png
     arrows: false
     badges: false
     frames:
-      - {img: raw/timeline-room-all-captured.png, trim: true, tabbar: true}
-      - {img: raw/room-list.png, trim: true, tabbar: true}
-      - {img: raw/project-list-timelines.png, tabbar: true}
+      - {img: raw/timeline-room-all-captured.png, tabbar: projects}
+      - {img: raw/room-list.png, tabbar: projects}
+      - {img: raw/project-list-timelines.png, tabbar: projects}
 
   - out: how-to-add-a-timeline/06-upload.png
     arrows: false
     badges: false
     frames:
-      - {img: raw/project-list.png, tabbar: true}
+      - {img: raw/project-list.png, tabbar: projects}
       - {img: raw/project-actions-local.png}
       - {img: raw/upload-progress.png}
 
