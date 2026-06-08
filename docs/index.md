@@ -8,4 +8,4 @@ what you see here matches the current version of the app.
 
 - [**Add a timeline**](docs/how-to-add-a-timeline.md) — add a follow-up visit to a project and capture its rooms.
 - [**Request a sketch**](docs/how-to-request-a-sketch.md) — order a floor-plan sketch for an uploaded tour.
-- [**Camera storage full alert**](docs/notification-alert-that-the-camera-storage-is-full.md) — what the "storage is full" warning means and where to free up space.
+- [**Notification Alert that the Camera Storage is Full**](docs/notification-alert-that-the-camera-storage-is-full.md) — what the "storage is full" warning means and where to free up space.

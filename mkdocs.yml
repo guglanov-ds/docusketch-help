@@ -34,4 +34,4 @@ nav:
   - Home: index.md
   - Add a timeline: docs/how-to-add-a-timeline.md
   - Request a sketch: docs/how-to-request-a-sketch.md
-  - Camera storage full alert: docs/notification-alert-that-the-camera-storage-is-full.md
+  - Notification Alert that the Camera Storage is Full: docs/notification-alert-that-the-camera-storage-is-full.md
