@@ -2,22 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://guglanov-ds.github.io/docusketch-help/</loc>
-         <lastmod>2026-06-08</lastmod>
+         <lastmod>2026-06-09</lastmod>
+    </url>
+    <url>
+         <loc>https://guglanov-ds.github.io/docusketch-help/docs/delete-projects/</loc>
+         <lastmod>2026-06-09</lastmod>
     </url>
     <url>
          <loc>https://guglanov-ds.github.io/docusketch-help/docs/how-to-add-a-timeline/</loc>
-         <lastmod>2026-06-08</lastmod>
+         <lastmod>2026-06-09</lastmod>
     </url>
     <url>
          <loc>https://guglanov-ds.github.io/docusketch-help/docs/how-to-request-a-sketch/</loc>
-         <lastmod>2026-06-08</lastmod>
+         <lastmod>2026-06-09</lastmod>
     </url>
     <url>
          <loc>https://guglanov-ds.github.io/docusketch-help/docs/how-to-reshoot-360-images-in-a-project/</loc>
-         <lastmod>2026-06-08</lastmod>
+         <lastmod>2026-06-09</lastmod>
     </url>
     <url>
          <loc>https://guglanov-ds.github.io/docusketch-help/docs/notification-alert-that-the-camera-storage-is-full/</loc>
-         <lastmod>2026-06-08</lastmod>
+         <lastmod>2026-06-09</lastmod>
     </url>
 </urlset>
