@@ -10,4 +10,5 @@ what you see here matches the current version of the app.
 - [**Request a sketch**](docs/how-to-request-a-sketch.md) — order a floor-plan sketch for an uploaded tour.
 - [**Notification Alert that the Camera Storage is Full**](docs/notification-alert-that-the-camera-storage-is-full.md) — what the "storage is full" warning means and where to free up space.
 - [**How to Reshoot 360° Images in a Project**](docs/how-to-reshoot-360-images-in-a-project.md) — replace a room's 360° image with a fresh capture.
+- [**How to Update Project Information**](docs/how-to-update-project-information.md) — edit a project's details and re-upload, on mobile or the web portal.
 - [**How to Delete a Project**](docs/delete-projects.md) — delete an un-uploaded project on the mobile app.

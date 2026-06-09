@@ -1,0 +1,31 @@
+# Reproduction of help.docusketch.com/docs/how-to-update-project-information (tut12).
+# Mobile composites from current-app baselines + reused web-portal screenshots (as-is, like
+# the other web sections). House style: real native iOS 26 chrome, iPhone 17 aspect, #F9F9F5.
+# (Edit form is its own frame — the edit baseline uses a different mock project than the
+# overview, so chaining them in one strip would mismatch the project name.)
+defaults:
+  frame_height: 1180
+  gap: 110
+  bg: "#F9F9F5"
+  status_bar: true
+
+composites:
+  - out: how-to-update-project-information/01-open.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/project-list.png, tabbar: projects}
+      - {img: raw/project-overview.png, tabbar: projects}
+
+  - out: how-to-update-project-information/02-edit.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/edit-project.png, tabbar: projects}
+
+  - out: how-to-update-project-information/03-upload.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/project-list.png, tabbar: projects}
+      - {img: raw/project-actions-local.png}
