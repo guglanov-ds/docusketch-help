@@ -52,6 +52,10 @@ copy "presentation-features-camera/CameraStorageFullAlertScreenshotTests - Camer
 copy "presentation-features-project/ProjectOverviewScreenshotTests - Project overview populated.png" "project-overview.png"
 copy "presentation-features-room/RoomDetailScreenshotTests - Room detail with panorama.png"          "room-detail-reshoot.png"
 
+# --- update-project-information (tut12) + simultaneous (tut11) ---
+copy "presentation-features-project/CreateOrEditProjectScreenshotTests - Edit project populated.png" "edit-project.png"
+copy "presentation-features-project/ProjectOverviewScreenshotTests - Project overview no rooms.png"  "project-overview-empty.png"
+
 if [[ $missing -ne 0 ]]; then
   echo "Some baselines are missing — regenerate them in the mobile worktree, then rerun." >&2
   exit 1

@@ -1,0 +1,16 @@
+# Reproduction of help.docusketch.com/docs/delete-projects (How to Delete a Project).
+# One mobile composite from current-app baselines. House style: real native iOS 26 chrome,
+# uniform iPhone 17 aspect, #F9F9F5 backdrop.
+defaults:
+  frame_height: 1180
+  gap: 110
+  bg: "#F9F9F5"
+  status_bar: true
+
+composites:
+  - out: delete-projects/01-delete.png
+    arrows: false
+    badges: false
+    frames:
+      - {img: raw/project-list.png, tabbar: projects}
+      - {img: raw/project-actions-local.png}
